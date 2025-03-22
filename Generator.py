@@ -1,7 +1,7 @@
 from random import seed
 
 
-class LinearCongruentGenerator:
+class Generator:
 
     def __init__(self,a,c,m,seed):
         self.a = a
