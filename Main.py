@@ -2,25 +2,20 @@
 Atividade Avaliativa MT2 - Geração de Números Pseudoaleatórios
 Autores: Giselle Chaves, Marcius Moraes, Julia Agustini, Artur Lampert
 """
+def main():
+    from LinearCongruentGenerator import LinearCongruentGenerator
 
-from Generator import linearCongruentGenerator
-from Generator import uniformity
+    a = 89
+    c = 226
+    m = 564
+    seed = 14
 
-a = 7632
-c = 6245
-m = 2.83712893198237E+29
-seed = 14
+    result = []
+    result = LinearCongruentGenerator(a,c,m,seed)
 
-result = []
-result = linearCongruentGenerator(a,c,m,seed)
-resultUniformity = uniformity(result,m)
+    print("next_random:")
+    print(result.next_random()) 
+        
 
-print(len(result))
-
-print("Values:")
-for i in result:
-    print(i) 
-    
-print("Uniformity:")
-for i in resultUniformity:
-    print(i)
+if __name__ == "__main__":
+    main()
