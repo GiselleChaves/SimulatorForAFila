@@ -6,7 +6,7 @@ def main():
     from Generator import Generator
     a = 89
     c = 226
-    m = 564
+    m = 564371982
     seed = 14
 
     result = []
@@ -14,6 +14,11 @@ def main():
 
     print("next_random:")
     print(result.next_random()) 
+    print(result.next_random()) 
+    print(result.next_random()) 
+    print(result.next_random()) 
+
+    
         
 
 if __name__ == "__main__":

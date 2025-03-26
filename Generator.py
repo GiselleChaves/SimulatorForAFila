@@ -11,7 +11,7 @@ class Generator:
 
     def next_random(self):
         """Generates the next normalized pseudo-random number between 0 and 1."""
-        previous = ((self.a * self.previous ) + self.c) % self.m
-        return previous / self.m
+        self.previous = ((self.a * self.previous ) + self.c) % self.m
+        return self.previous / self.m
 
         
