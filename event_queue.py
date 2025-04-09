@@ -9,8 +9,8 @@ class EventQueue:
         self.events = []
         self.queue_size = 0
 
-    def add(self, event_type, random_number, total_time):
-        new_time = self.calculate_position(total_time, event_type, random_number)
+    def add(self, event_type, random_number, total_time, min_arrival_time, max_arrival_time, min_exit_request_time, max_exit_request_time):
+        new_time = self.calculate_position(total_time, event_type, random_number, min_arrival_time, max_arrival_time, min_exit_request_time, max_exit_request_time)
         event_details = f"Event: {event_type}, Random Number: {random_number}, Time: {total_time}, New Time: {new_time}"
         print(event_details)  # Print event details in one line
 
@@ -24,13 +24,13 @@ class EventQueue:
     def remove(self):
         return heapq.heappop(self.events)
 
-    def calculate_position(self, total_time, event_type, random_number):
+    def calculate_position(self, total_time, event_type, random_number,min_arrival_time, max_arrival_time, min_exit_request_time, max_exit_request_time):
         if event_type == EventType.ARRIVAL:
-            return total_time + (Event.MIN_ARRIVAL_TIME_CLIENT + 
-                                 ((Event.MAX_ARRIVAL_TIME_CLIENT - Event.MIN_ARRIVAL_TIME_CLIENT) * random_number))
+            return total_time + (min_arrival_time + 
+                                 ((max_arrival_time - min_arrival_time) * random_number))
         elif event_type == EventType.DEPARTURE:
-            return total_time + (Event.MIN_EXIT_REQUEST_TIME + 
-                                 ((Event.MAX_EXIT_REQUEST_TIME - Event.MIN_EXIT_REQUEST_TIME) * random_number))
+            return total_time + (min_exit_request_time + 
+                                 ((max_exit_request_time - min_exit_request_time) * random_number))
         else:
             raise ValueError("Unknown event type")
 

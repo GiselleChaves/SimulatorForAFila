@@ -2,6 +2,7 @@ from collections import deque
 from event import Event
 from event_type import EventType
 from event_queue import EventQueue
+from fila import Fila
 
 def main():
     
@@ -9,39 +10,26 @@ def main():
     
     arrival_time = 1.0
     
-    lambda_value = 2  
-    queue_state = 2 
+    lambda_value = 2  # Quantidade de servidores
+    queue_state = 3  # Tamanho máximo da fila
 
-    Event.MIN_ARRIVAL_TIME_CLIENT = 1.0
-    Event.MAX_ARRIVAL_TIME_CLIENT = 3.0
+    estado_fila = [0] * (queue_state + 1)
 
-    Event.MIN_EXIT_REQUEST_TIME = 3.0
-    Event.MAX_EXIT_REQUEST_TIME = 4.0
+    min_arrival_time = 1.0
+    max_arrival_time = 3.0
+    min_exit_request_time = 3.0
+    max_exit_request_time = 4.0
     random_numbers = deque([0.7, 0.1, 0.1, 0.9, 0.2, 0.7])
     
     total_time = 0.0
+    initial_event = Event(EventType.ARRIVAL, arrival_time)
 
+    fila = Fila(lambda_value, queue_state, arrival_time, random_numbers, min_arrival_time, max_arrival_time, min_exit_request_time, max_exit_request_time)
+    fila2 = Fila(lambda_value, queue_state, arrival_time, random_numbers, min_arrival_time, max_arrival_time, min_exit_request_time, max_exit_request_time)
     while random_numbers:
-        if total_time == 0.0:
-            current_event = Event(EventType.ARRIVAL, arrival_time)
-        else:
-            current_event = queue.remove()
-
-        total_time = current_event.time
-
-        if current_event.event_type == EventType.ARRIVAL:
-            if queue.size() < queue_state:
-                queue.increment_queue()
-                if queue.get_queue_size() <= lambda_value:
-                    queue.add(EventType.DEPARTURE, random_numbers.popleft(), total_time)
-
-            queue.add(EventType.ARRIVAL, random_numbers.popleft(), total_time)
-        else:
-            queue.decrement_queue()
-            if queue.get_queue_size() >= lambda_value:
-                queue.add(EventType.DEPARTURE, random_numbers.popleft(), total_time)
-
-    print(f"Total time: {total_time}")
+        event = fila.exec(initial_event)
+        if event is not None:
+            fila2.exec(event)
 
 if __name__ == "__main__":
     main()
