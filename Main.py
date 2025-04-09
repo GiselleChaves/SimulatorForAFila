@@ -22,14 +22,10 @@ def main():
     random_numbers = deque([0.7, 0.1, 0.1, 0.9, 0.2, 0.7])
     
     total_time = 0.0
-    initial_event = Event(EventType.ARRIVAL, arrival_time)
 
     fila = Fila(lambda_value, queue_state, arrival_time, random_numbers, min_arrival_time, max_arrival_time, min_exit_request_time, max_exit_request_time)
-    fila2 = Fila(lambda_value, queue_state, arrival_time, random_numbers, min_arrival_time, max_arrival_time, min_exit_request_time, max_exit_request_time)
     while random_numbers:
-        event = fila.exec(initial_event)
-        if event is not None:
-            fila2.exec(event)
+        event = fila.exec()
 
 if __name__ == "__main__":
     main()

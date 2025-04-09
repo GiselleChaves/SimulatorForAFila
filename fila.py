@@ -22,7 +22,7 @@ class Fila:
     
     total_time = 0.0
 
-    def __init__(self, queue_state, lambda_value, random_number, min_arrival_time, max_arrival_time, min_exit_request_time, max_exit_request_time):
+    def __init__(self, queue_state, lambda_value, arrival_time, random_number, min_arrival_time, max_arrival_time, min_exit_request_time, max_exit_request_time):
         self.queue_state = queue_state
         self.lambda_value = lambda_value
         self.min_arrival_time = min_arrival_time
@@ -30,14 +30,16 @@ class Fila:
         self.min_exit_request_time = min_exit_request_time
         self.max_exit_request_time = max_exit_request_time
         self.estado_fila = [0] * (queue_state + 1)
+        self.arrival_time = arrival_time
         self.queue = EventQueue()
         self.total_time = 0.0
         self.random_numbers = random_number
     
-    def initialize(self):
-    def exec(self, event):
-        
-        current_event = self.queue.remove()
+    def exec(self):
+        if self.total_time == 0.0:
+            current_event = Event(EventType.ARRIVAL, self.arrival_time)
+        else:
+            current_event = self.queue.remove()
         
         last_event_time = self.total_time
         self.total_time = current_event.time
